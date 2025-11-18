@@ -1,0 +1,142 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+
+using namespace std;
+
+const double TASAIVA = 0.15;
+const double TASAICE = 0.15;
+const double BASEINST = 120.00;
+const double PRECTEL = 7.99;
+const double PRECTVS = 28.50;
+const double PRECINT = 18.00;
+
+double calcularPrecioMensual(double pbas, bool apliIce) {
+    double ivac = pbas * TASAIVA;
+    double icec = 0.0;
+    
+    if (apliIce) {
+        icec = pbas * TASAICE;
+    }
+    
+    return pbas + ivac + icec;
+}
+
+double calcularCostoInstalacion(int meto) {
+    double descinst = 0.0;
+    
+    if (meto == 1) {
+        descinst = BASEINST * 0.50;
+    } else if (meto == 2) {
+        descinst = BASEINST * 0.10;
+    }
+    
+    return BASEINST - descinst;
+}
+
+void consultarServicio(int opci) {
+    string nomb = "";
+    double pbas = 0.0;
+    bool apliIce = false;
+    
+    switch (opci) {
+        case 1: 
+            nomb = "Telefonia Fija"; 
+            pbas = PRECTEL; 
+            break;
+        case 2: 
+            nomb = "TV Satelital"; 
+            pbas = PRECTVS; 
+            apliIce = true; 
+            break;
+        case 3: 
+            nomb = "Internet Hogar"; 
+            pbas = PRECINT; 
+            break;
+        default: 
+            return;
+    }
+    
+    double piva = pbas * TASAIVA;
+    double pice = pbas * (apliIce ? TASAICE : 0.0);
+    double ptotal = pbas + piva + pice;
+    double desced = 0.0;
+    double pfinal = ptotal;
+    
+    cout << "Servicio Seleccionado: " << nomb << "" << endl;
+    cout << "Precio Mensual (sin desc. 3a edad): $" << ptotal << endl;
+    
+    int edad;
+    cout << "Ingrese su edad: ";
+    while (!(cin >> edad) || edad < 0) {
+        cout << "Edad invalida. Ingrese una edad valida: ";
+        cin.clear();
+        cin.ignore(100, '\n');
+    }
+    
+    if (edad > 65) {
+        desced = pbas * 0.50;
+        pfinal = ptotal - desced;
+        cout << "Descuento por tercera edad (50% base): $" << desced << endl;
+        cout << "Precio Mensual Final a Pagar: $" << pfinal << endl;
+    } else {
+        cout << "No aplica descuento por tercera edad." << endl;
+    }
+    
+    int meto;
+    cout << "Costo de Instalacion (Base $" << BASEINST << ")" << endl;
+    cout << "1. Tarjeta de credito (50% desc)" << endl;
+    cout << "2. Efectivo (10% desc)" << endl;
+    cout << "3. Otro metodo (Sin desc)" << endl;
+    cout << "Seleccione metodo de pago para instalacion: ";
+    
+    while (!(cin >> meto) || meto < 1 || meto > 3) {
+        cout << "Opcion invalida. Seleccione 1, 2, o 3: ";
+        cin.clear();
+        cin.ignore(100, '\n');
+    }
+    
+    double cinst = calcularCostoInstalacion(meto);
+    cout << "Costo Final de Instalacion: $" << cinst << endl;
+    
+    cout << " RESUMEN " << endl;
+    cout << "Servicio: " << nomb << endl;
+    cout << "Precio Base (sin impuestos): $" << pbas << endl;
+    cout << "IVA (15%): $" << piva << endl;
+    cout << "ICE (15%): $" << pice << (apliIce ? "" : " (No Aplica)") << endl;
+    cout << "Descuento 3a Edad: $" << desced << endl;
+    cout << "Precio Mensual Final: $" << pfinal << endl;
+    cout << "Costo Final de Instalacion: $" << cinst << endl;
+
+}
+
+int main() {
+    int opci;
+    
+    cout << fixed << setprecision(2);
+    cout << "EJERCICIO 4" << endl;
+    
+    do {
+        cout << " Menu de Servicios" << endl;
+        cout << "1. Telefonia Fija ($" << PRECTEL << ")" << endl;
+        cout << "2. TV Satelital ($" << PRECTVS << ")" << endl;
+        cout << "3. Internet Hogar ($" << PRECINT << ")" << endl;
+        cout << "4. Salir" << endl;
+        cout << "Seleccione una opcion: ";
+        
+        while (!(cin >> opci) || opci < 1 || opci > 4) {
+            cout << "Opcion invalida. Seleccione 1, 2, 3 o 4: ";
+            cin.clear();
+            cin.ignore(100, '\n');
+        }
+        
+        if (opci >= 1 && opci <= 3) {
+            consultarServicio(opci);
+        } else if (opci == 4) {
+            cout << "Gracias por usar" << endl;
+        }
+        
+    } while (opci != 4);
+    
+    return 0;
+}
