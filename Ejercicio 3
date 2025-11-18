@@ -1,0 +1,43 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+double calcularDescuento(double prec, double porc) {
+    return prec * (porc / 100.0);
+}
+
+double calcularTotalPagar(double pbas, double dfid, double dpro) {
+    double desc1 = calcularDescuento(pbas, dfid);
+    double desc2 = calcularDescuento(pbas, dpro);
+    
+    return pbas - (desc1 + desc2);
+}
+
+int main() {
+    double pbas;
+    double dfid;
+    double dpro;
+    double total;
+    
+    cout << fixed << setprecision(2);
+    cout << "EJERCICIO 3" << endl;
+    
+    cout << "Ingrese el precio base del plan mensual: $";
+    cin >> pbas;
+    
+    cout << "Ingrese el porcentaje de descuento por fidelidad: ";
+    cin >> dfid;
+    
+    cout << "Ingrese el porcentaje de descuento promocional: ";
+    cin >> dpro;
+    
+    total = calcularTotalPagar(pbas, dfid, dpro);
+    
+    cout << " Resumen de Pago " << endl;
+    cout << "Precio Base: $" << pbas << endl;
+    cout << "Descuento Fidelidad: " << dfid << "%" << endl;
+    cout << "Descuento Promocional: " << dpro << "%" << endl;
+    cout << "Monto Final a Pagar: $" << total << endl;
+    return 0;
+}
