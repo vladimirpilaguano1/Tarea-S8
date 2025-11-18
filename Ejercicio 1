@@ -1,0 +1,80 @@
+#include <iostream>
+
+using namespace std;
+
+
+const int TAM = 5;
+
+int main() {
+    int arrg[TAM];   
+    int opci;        
+    bool llen = false; 
+    
+    cout << "EJERCICIO 1" << endl;
+    
+    do {
+        cout << " Menu de Opciones " << endl;
+        cout << "1. Llenar el arreglo" << endl;
+        cout << "2. Sumar los elementos del arreglo" << endl;
+        cout << "3. Modificar una posicion" << endl;
+        cout << "4. Salir" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opci;
+        
+        switch (opci) { 
+            case 1: { 
+                cout << " Llenado del Arreglo " << endl;
+                for (int i = 0; i < TAM; i++) {
+                    cout << "Ingrese valor entero para posicion [" << i << "]: ";
+                    cin >> arrg[i]; 
+                }
+                llen = true; 
+                cout << "¡Llenado realizado correctamente!" << endl; 
+                break;
+            }
+            case 2: { 
+                if (!llen) {
+                    
+                    cout << "ERROR: El arreglo no esta inicializado. Use la opción 1." << endl;
+                } else {
+                    int suma = 0;
+                    for (int i = 0; i < TAM; i++) {
+                        suma += arrg[i];
+                    }
+                    cout << "La suma total de los elementos es: " << suma << endl;
+                }
+                break;
+            }
+            case 3: { 
+                if (!llen) {
+                
+                    cout << "ERROR: El arreglo no está inicializado. Use la opcion 1." << endl;
+                } else {
+                    int posi; 
+                    int nval; 
+                    cout << "Ingrese indice de posicion a modificar (0 a " << (TAM - 1) << "): "; 
+                    cin >> posi;
+                    if (posi >= 0 && posi < TAM) {
+                        cout << "Ingrese el nuevo valor para la posicion [" << posi << "]: ";
+                        cin >> nval; 
+                        arrg[posi] = nval; 
+                        cout << "Posicion [" << posi << "] modificada correctamente a " << nval << endl;
+                    } else {
+                        cout << "ERROR: Posicion fuera del rango permitido (0 a " << (TAM - 1) << ")." << endl;
+                    }
+                }
+                break;
+            }
+            case 4: { 
+                cout << "Saliendo del programa. " << endl;
+                break;
+            }
+            default: {
+                cout << "Opcion no válida. Intente de nuevo." << endl;
+                break;
+            }
+        }
+    } while (opci != 4); 
+    
+    return 0;
+}
