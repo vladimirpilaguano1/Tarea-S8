@@ -1,0 +1,87 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+
+using namespace std;
+
+const int MAXP = 8;
+
+void ingresarDatos(double prec[], int tamn) {
+    cout << "1. Ingresar Datos" << endl;
+    for (int i = 0; i < tamn; i++) {
+        cout << "Ingrese el precio " << (i + 1) << ": $";
+        cin >> prec[i];
+    }
+}
+
+void encontrarMayorMenor(double arrg[], int tamn, double &mayr, double &menr) {
+    if (tamn <= 0) return;
+    
+    mayr = arrg[0];
+    menr = arrg[0];
+    
+    for (int i = 1; i < tamn; i++) {
+        if (arrg[i] > mayr) {
+            mayr = arrg[i];
+        }
+        if (arrg[i] < menr) {
+            menr = arrg[i];
+        }
+    }
+}
+
+void mostrarDatosProgramador() {
+    cout << "Datos del Programador " << endl;
+    cout << "Nombre: Rodrigo Pilaguano" << endl;
+    cout << "Carrera: Desarrollo de Software" << endl;
+    cout << "Fecha: 17 de Noviembre de 2025" << endl;
+}
+
+void calcularDescuento() {
+    string prod;
+    double prec, desc, pfin;
+    
+    cout << "4. Calcular Descuento" << endl;
+    cout << "Ingrese nombre del producto: ";
+    cin.ignore();
+    getline(cin, prod);
+    
+    cout << "Ingrese precio del producto: $";
+    cin >> prec;
+    
+    desc = 0.0;
+    if (prec > 1000.0) {
+        desc = prec * 0.10;
+        cout << "¡Descuento de 10% aplicado!" << endl;
+    } else {
+        cout << "No aplica descuento." << endl;
+    }
+    
+    pfin = prec - desc;
+    
+    cout << "Producto: " << prod << endl;
+    cout << "Precio Base: $" << fixed << setprecision(2) << prec << endl;
+    cout << "Descuento Aplicado: $" << desc << endl;
+    cout << "Precio Final a Pagar: $" << pfin << endl;
+}
+
+int main() {
+    double prec[MAXP];
+    double mayr, menr;
+    
+    cout << fixed << setprecision(2);
+    cout << " EJERCICIO 2" << endl;
+    
+    ingresarDatos(prec, MAXP);
+    
+    encontrarMayorMenor(prec, MAXP, mayr, menr);
+    cout << " 2. Mayor y Menor " << endl;
+    cout << "El precio mayor es: $" << mayr << endl;
+    cout << "El precio menor es: $" << menr << endl;
+    
+    mostrarDatosProgramador();
+    
+    calcularDescuento();
+    
+    return 0;
+}
